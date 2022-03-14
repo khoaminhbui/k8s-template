@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service-v1
+  namespace: notification
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: notification-service
+        version: v1
+    spec:
+      containers:
+      - name: notification-service
+        image: huynhngochuyhoang/notification-service
+        env:
+          - name: APP_VERSION
+            value: 'v1'
+        ports:
+        - containerPort: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service-v2
+  namespace: notification
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: notification-service
+        version: v2
+    spec:
+      containers:
+      - name: notification-service
+        image: huynhngochuyhoang/notification-service
+        env:
+          - name: APP_VERSION
+            value: 'v2'
+        ports:
+        - containerPort: 8081

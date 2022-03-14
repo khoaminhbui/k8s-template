@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: check-notification-service
+  namespace: notification
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: check-notification-service
+  template:
+    metadata:
+      labels:
+        app: check-notification-service
+    spec:
+      containers:
+      - name: check-notification-service
+        image: huynhngochuyhoang/check-notification-service
+        env:
+          - name: NOTIFICATION_SERVICE
+            value: 'notification-service'
+          - name: SERVER_PORT
+            value: '8080'
+        ports:
+        - containerPort: 8080
