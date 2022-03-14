@@ -1,0 +1,31 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongClusterPlugin
+metadata:
+  name: kong-cors
+  annotations:
+    kubernetes.io/ingress.class: kong
+  labels:
+    global: 'true'
+config:
+  origins:
+    - http://localhost # change to your ip
+  methods:
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+  headers:
+    - Accept
+    - Accept-Version
+    - Content-Length
+    - Content-MD5
+    - Content-Type
+    - Date
+    - X-Auth-Token
+  exposed_headers:
+    - X-Auth-Token
+  credentials: true
+  max_age: 3600
+  preflight_continue: false
+plugin: cors
