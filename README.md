@@ -36,7 +36,7 @@ $ kubectl -n kong get service kong-proxy
 $ kubectl apply -f kong/konga.yml
 ```
 Create connection between Kong and Konga
-- Open browser and navigate to http://<konga-service-ip>:30330 then create the first admin user.
+- Open browser and navigate to http://<KONGA_SERVICE-IP>:30330 then create the first admin user.
 - Next, create Connection to Kong API Admin by enter http://<KONG_PROXY-IP>:8001 to the Kong Admin URL section and click Create Connection button.
 ## Expose service through [Kong Gateway](https://docs.konghq.com/kubernetes-ingress-controller/2.2.x/guides/getting-started/#basic-proxy)
 ```
