@@ -4,15 +4,16 @@ Create a new namespace
 ```
 $ kubectl create namespace notification
 ```
-# Deploy containers to k8s cluster and expose to the outside world with NodePort
+# Basic deploy container to k8s cluster
 ```
 $ kubectl apply -f k8s-object
 ```
+## Expose services using NodePort
 Verify deployments by command
 ```
 $ curl <k8s-cluster-ip-address>:30333/api/checkNotification/refresh
 ```
-# Expose using ingress-nginx
+# Expose services using ingress-nginx
 ```
 $ kubectl apply -f k8s-ingress-nginx
 ```
