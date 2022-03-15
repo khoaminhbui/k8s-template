@@ -117,7 +117,8 @@ The Istio DestinationRule resource provides a way to configure traffic once it h
 ```
 ### [Virtual Service](https://istio.io/latest/docs/reference/config/networking/virtual-service/)
 Virtual Service acts in much the same capacity as a traditional Kubernetes Ingress resource, in that a VirtualService resource matches traffic and directs it to a Service resource.
-#### [Route Destination](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRouteDestination) apply the rule to send traffic to multiple version of Service
+#### [Route Destination](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRouteDestination)
+Apply the rule to send traffic to multiple version of Service
 ```
   http:
     - route:
@@ -130,7 +131,8 @@ Virtual Service acts in much the same capacity as a traditional Kubernetes Ingre
           subset: v2
         weight: 60
 ```
-#### [Network Fault](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPFaultInjection) is a great way to test how applications respond to failed requests
+#### [Network Fault](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPFaultInjection) 
+A great way to test how applications respond to failed requests
 ```
       fault:
         delay:
@@ -138,7 +140,8 @@ Virtual Service acts in much the same capacity as a traditional Kubernetes Ingre
             value: 30
           fixedDelay: 5s
 ```
-#### [HTTPRoute](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRoute) describes match conditions and actions for routing traffic, including rewrite url, cors policy, fault injection, timeout,…
+#### [HTTPRoute](https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRoute)
+Describes match conditions and actions for routing traffic, including rewrite url, cors policy, fault injection, timeout,…
 ```
       match:
         - uri:
