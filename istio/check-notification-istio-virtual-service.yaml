@@ -1,0 +1,67 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: check-notification-virtual-service
+  namespace: notification
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - check-notification-gateway
+  http:
+    - name: "check-notification-refresh-notification-api"
+      match:
+        - uri:
+            exact: "/api/checkNotification/refresh"
+      route:
+        - destination:
+            host: check-notification-service
+            port:
+              number: 8080
+      timeout: 1s
+      corsPolicy:
+        allowOrigins:
+          - exact: http://localhost
+        allowMethods:
+          - GET
+    - name: "check-notification-create-notification-api"
+      match:
+        - uri:
+            exact: "/api/checkNotification/create"
+      route:
+        - destination:
+            host: check-notification-service
+            port:
+              number: 8080
+      corsPolicy:
+        allowOrigins:
+          - exact: http://localhost
+        allowMethods:
+          - POST
+        allowHeaders:
+          - "Content-Type"
+    - name: "check-notification-show-unread-notification-api"
+      match:
+        - uri:
+            prefix: "/api/checkNotification/showUnreadNotification"
+      rewrite:
+        uri: "/api/checkNotification/show"
+      fault:
+        delay:
+          percentage:
+            value: 30
+          fixedDelay: 3s
+        abort:
+          percentage:
+            value: 10
+          httpStatus: 502
+      route:
+        - destination:
+            host: check-notification-service
+            port:
+              number: 8080
+      corsPolicy:
+        allowOrigins:
+          - exact: http://localhost
+        allowMethods:
+          - GET
