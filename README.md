@@ -1,4 +1,3 @@
-# k8s-template
 # Getting started
 Create a new namespace
 ```
@@ -185,4 +184,24 @@ $ istioctl dashboard kiali
 > To see trace data, you must send requests to your service. The number of requests depends on Istio’s sampling rate. You set this rate when you install Istio. The default sampling rate is 1%. You need to send at least 100 requests before the first trace is visible. To send a 100 requests to the `checkNotification` service, use the following command
 ```
 $ for i in $(seq 1 100); do curl -s -o /dev/null "http://<ISTIO_GATEWAY-IP>/api/checkNotification/refresh"; done
+```
+## Integrating Kong
+- Enable the namespace for the Istio mesh
+```
+$ kubectl label namespace kong istio-injection=enabled
+```
+- Reapply all `kong` kubernetes object
+```
+$ kubectl delete -f kong/all-in-one-postgres.yaml
+$ kubectl apply -f kong/all-in-one-postgres.yaml
+```
+- Recreate pod and service
+```
+$ kubectl delete -f k8s-object
+$ kubectl apply -f k8s-object
+$ kubectl apply -f kong-istio
+```
+- Verify traffic
+```
+$ curl <KONG_PROXY-IP>/api/checkNotification/refresh
 ```

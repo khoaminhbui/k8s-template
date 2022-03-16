@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kong-ingress
+  namespace: notification
+spec:
+  ingressClassName: kong
+  rules:
+    - http:
+        paths:
+          - path: /api/checkNotification/refresh
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: check-notification-service
+                port:
+                  number: 8080
