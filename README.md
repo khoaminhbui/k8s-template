@@ -1,3 +1,6 @@
+# Reference
+https://khoabui7.atlassian.net/wiki/spaces/PAN/pages/118554625/Kubernetes
+
 # Getting started
 Create a new namespace
 ```
