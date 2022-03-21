@@ -14,7 +14,7 @@ $ kubectl apply -f k8s-object
 
 After this step we will have:
 - 2 pods containing the services.
-- 2 service servced as interface for the pods.
+- 2 service serv as interface for the pods.
 
 ## Verify services exposed via NodePort
 Verify deployments by command
@@ -25,7 +25,21 @@ $ curl <k8s-cluster-ip-address>:30333/api/checkNotification/refresh
 ## Expose services using ingress-nginx
 - Expose services via Ingress (prefered over NodePort).
 - Refer to this for Ingress: https://khoabui7.atlassian.net/wiki/spaces/PAN/pages/118554625/Kubernetes#Ingress
-
+- Install Kubernetes Ingress Controller
+```
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml
+```
+- Pre-flight check
+```
+A few pods should start in the ingress-nginx namespace
+$ kubectl get pods --namespace=ingress-nginx
+```
+> If your Kubernetes cluster is a "real" cluster that supports services of type LoadBalancer, it will have allocated an external IP address or FQDN to the ingress controller. You can see that IP address or FQDN with the following command
+```
+$ kubectl get service ingress-nginx-controller --namespace=ingress-nginx
+```
+> It will be the EXTERNAL-IP field. If that field shows `<pending>`, this means that your Kubernetes cluster wasn't able to provision the load balancer (generally, this is because it doesn't support services of type LoadBalancer). You can still able access by `<k8s-cluster-master-ip-address:ingress-nginx-controller-node-port>`
+- Apply the ingress rule
 ```
 $ kubectl apply -f k8s-ingress-nginx
 ```
@@ -88,8 +102,11 @@ $ kubectl apply -f kong/kong-rate-limit.yaml
 
 # Service mesh [Istio](https://istio.io/latest/docs/setup/getting-started/)
 ## Install Istio
-- ...
-
+- Download [Istio](https://github.com/istio/istio/releases) and add `istioctl` client to the path.
+- Install `istio` on kubernetes cluster by command
+```
+$ istioctl install
+```
 ## Inject Envoy sidecar
 - Inject envoy sidecar to `notification` namespace
 ```
